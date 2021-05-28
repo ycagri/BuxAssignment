@@ -1,0 +1,47 @@
+ext.deps = [:]
+def versions = [:]
+
+versions.android_plugin = '3.6.4'
+versions.kotlin_plugin = '1.4.0'
+versions.navigation_plugin = '2.3.0'
+versions.allopen_plugin = '1.4.21'
+versions.retrofit2 = '2.3.0'
+versions.retrofit2_converter_scalars = '2.3.0'
+versions.retrofit2_converter_gson = '2.0.2'
+versions.retrofit2_adapter_rxjava = '2.2.0'
+versions.okhttp_logging_interceptor = '3.8.0'
+versions.dagger2 = '2.21'
+ext.versions = versions
+
+def build_versions = [:]
+build_versions.min_sdk = 21
+build_versions.compile_sdk = 29
+build_versions.target_sdk = 29
+build_versions.build_tools = "29.0.3"
+ext.build_versions = build_versions
+
+def deps = [:]
+
+deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+deps.kotlin_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin_plugin"
+deps.navigation_plugin = "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation_plugin"
+deps.allopen_plugin = "org.jetbrains.kotlin:kotlin-allopen:$versions.allopen_plugin"
+
+def retrofit2 = [:]
+retrofit2.retrofit = "com.squareup.retrofit2:retrofit:$versions.retrofit2"
+retrofit2.converter_scalars = "com.squareup.retrofit2:converter-scalars:$versions.retrofit2_converter_scalars"
+retrofit2.converter_gson = "com.squareup.retrofit2:converter-gson:$versions.retrofit2_converter_gson"
+retrofit2.adapter_rxjava = "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit2_adapter_rxjava"
+retrofit2.okhttp_logging = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_logging_interceptor"
+deps.retrofit2 = retrofit2
+
+def dagger2 = [:]
+dagger2.runtime = "com.google.dagger:dagger:$versions.dagger2"
+dagger2.android = "com.google.dagger:dagger-android:$versions.dagger2"
+dagger2.android_support = "com.google.dagger:dagger-android-support:$versions.dagger2"
+dagger2.compiler = "com.google.dagger:dagger-compiler:$versions.dagger2"
+dagger2.android_support_compiler = "com.google.dagger:dagger-android-processor:$versions.dagger2"
+deps.dagger2 = dagger2
+
+deps.kotlin = "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin_plugin"
+ext.deps = deps
