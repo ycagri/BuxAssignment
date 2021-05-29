@@ -5,6 +5,11 @@ plugins {
     id 'kotlin-allopen'
 }
 
+allOpen {
+    // allows mocking for classes w/o directly opening them for release builds
+    annotation 'com.ycagri.buxassignment.testing.OpenClass'
+}
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
