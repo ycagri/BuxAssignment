@@ -58,7 +58,7 @@ dependencies {
     implementation deps.androidx.livedata
     implementation deps.androidx.lifecycle
     implementation deps.androidx.lifecycle_java8
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation deps.androidx.swiperefresh
     implementation deps.material
 
     implementation deps.androidx.room.runtime
@@ -79,9 +79,15 @@ dependencies {
     implementation deps.retrofit2.okhttp_logging
 
     testImplementation deps.junit
+    testImplementation deps.androidx.test.arch
+    testImplementation deps.mockito.core
+    testImplementation deps.mockito.all
 
     androidTestImplementation deps.junit
     androidTestImplementation deps.androidx.test.junit
     androidTestImplementation deps.androidx.test.espresso
     androidTestImplementation deps.androidx.test.arch
+    androidTestImplementation deps.mockito.core
+    androidTestImplementation deps.mockito.all
+    androidTestImplementation deps.mockito.android
 }

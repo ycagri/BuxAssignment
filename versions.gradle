@@ -25,6 +25,9 @@ versions.dagger2 = '2.21'
 versions.junit = '4.13.2'
 versions.androidx_junit = '1.1.2'
 versions.espresso = '3.3.0'
+versions.mockito_core = '2.25.0'
+versions.mockito_all = '1.10.19'
+versions.mockito_android = '2.25.0'
 ext.versions = versions
 
 def build_versions = [:]
@@ -80,6 +83,12 @@ dagger2.android_support = "com.google.dagger:dagger-android-support:$versions.da
 dagger2.compiler = "com.google.dagger:dagger-compiler:$versions.dagger2"
 dagger2.android_support_compiler = "com.google.dagger:dagger-android-processor:$versions.dagger2"
 deps.dagger2 = dagger2
+
+def mockito = [:]
+mockito.core = "org.mockito:mockito-core:$versions.mockito_core"
+mockito.all = "org.mockito:mockito-all:$versions.mockito_all"
+mockito.android = "org.mockito:mockito-android:$versions.mockito_android"
+deps.mockito = mockito
 
 deps.kotlin = "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin_plugin"
 deps.material = "com.google.android.material:material:$versions.material"
