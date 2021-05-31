@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">BuxAssignment</string>
     <string name="title_item_detail">Item Detail</string>
+
+    <string name="prices">Prices</string>
+    <string name="ranges">Ranges</string>
+    <string name="subscribe">Subscribe</string>
 </resources>
