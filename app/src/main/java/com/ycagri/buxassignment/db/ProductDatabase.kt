@@ -12,7 +12,7 @@ import com.ycagri.buxassignment.api.ProductRange
         ProductPriceEntity::class,
         ProductRangeEntity::class
     ],
-    version = 1, exportSchema = true
+    version = 1, exportSchema = false
 )
 abstract class ProductDatabase : RoomDatabase() {
 

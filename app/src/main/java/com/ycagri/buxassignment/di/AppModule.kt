@@ -1,6 +1,10 @@
 package com.ycagri.buxassignment.di
 
+import android.app.Application
+import android.content.Context
+import androidx.room.Room
 import com.ycagri.buxassignment.api.BuxRetrofitApi
+import com.ycagri.buxassignment.db.ProductDatabase
 import com.ycagri.buxassignment.util.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -14,7 +18,7 @@ import javax.inject.Singleton
 class AppModule {
     @Singleton
     @Provides
-    fun provideGithubService(): BuxRetrofitApi {
+    fun provideBuxService(): BuxRetrofitApi {
         val okHttpClient = OkHttpClient.Builder().apply {
             addInterceptor(
                 Interceptor { chain ->
@@ -37,5 +41,11 @@ class AppModule {
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
             .create(BuxRetrofitApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideProductsDatabase(app: Application): ProductDatabase {
+        return Room.databaseBuilder(app, ProductDatabase::class.java, "products.db").build()
     }
 }
