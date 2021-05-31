@@ -88,6 +88,7 @@ dependencies {
     androidTestImplementation deps.androidx.test.espresso
     androidTestImplementation deps.androidx.test.arch
     androidTestImplementation deps.mockito.core
-    androidTestImplementation deps.mockito.all
     androidTestImplementation deps.mockito.android
+
+    debugImplementation deps.androidx.fragment_testing
 }
