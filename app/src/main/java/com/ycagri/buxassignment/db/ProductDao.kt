@@ -17,4 +17,7 @@ abstract class ProductDao {
 
     @Query("Select * From tbl_products")
     abstract fun getProducts(): LiveData<List<ProductEntity>>
+
+    @Query("Select * From tbl_products Where security_id=:id")
+    abstract fun getProductById(id: String): LiveData<ProductEntity>
 }

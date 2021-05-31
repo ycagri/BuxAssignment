@@ -70,6 +70,16 @@ class ProductDatabaseTest {
         assertEquals("Test Description", res[0].description)
     }
 
+    @Test
+    fun testProductGetById() {
+        insertProduct()
+        val res = db.productDao().getProductById("id").getOrAwaitValue()
+        assertEquals("id", res.securityId)
+        assertEquals("Test Product", res.displayName)
+        assertEquals("Test Symbol", res.symbol)
+        assertEquals("Test Description", res.description)
+    }
+
     @Test(expected = SQLiteConstraintException::class)
     fun testProductPriceInsertException() {
         insertProductPrice(ProductPriceEntity.CURRENT)
