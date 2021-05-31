@@ -40,6 +40,10 @@ android {
     dataBinding {
         enabled = true
     }
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
+    }
 }
 
 dependencies {
@@ -72,6 +76,8 @@ dependencies {
 
     testImplementation deps.junit
 
+    androidTestImplementation deps.junit
     androidTestImplementation deps.androidx.test.junit
     androidTestImplementation deps.androidx.test.espresso
+    androidTestImplementation deps.androidx.test.arch
 }
