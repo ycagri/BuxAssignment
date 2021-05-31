@@ -6,5 +6,7 @@ import com.ycagri.buxassignment.testing.OpenForTesting
 import javax.inject.Inject
 
 @OpenForTesting
-class ProductViewModel @Inject constructor(val repository: ProductRepository): ViewModel() {
+class ProductViewModel @Inject constructor(val repository: ProductRepository) : ViewModel() {
+
+    val products by lazy { repository.getProducts() }
 }

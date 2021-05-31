@@ -55,6 +55,10 @@ dependencies {
     implementation deps.androidx.constraintlayout
     implementation deps.androidx.navigation_fragment
     implementation deps.androidx.navigation_ui
+    implementation deps.androidx.livedata
+    implementation deps.androidx.lifecycle
+    implementation deps.androidx.lifecycle_java8
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation deps.material
 
     implementation deps.androidx.room.runtime
