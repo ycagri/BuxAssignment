@@ -50,9 +50,9 @@ class ProductListFragment : Fragment(), Injectable {
                 DividerItemDecoration.VERTICAL
             )
         )
-        val adapter = ProductsAdapter(appExecutors, {
-
-        })
+        val adapter = ProductsAdapter(appExecutors) {
+            productViewModel.selectProduct(it.securityId)
+        }
         productsRV.adapter = adapter
 
         val swipeRefresh = view.findViewById<SwipeRefreshLayout>(R.id.srl_products)
