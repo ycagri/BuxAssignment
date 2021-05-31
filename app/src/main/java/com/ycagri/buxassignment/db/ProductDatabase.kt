@@ -24,15 +24,19 @@ abstract class ProductDatabase : RoomDatabase() {
 
     fun insertEntities(products: List<Product>) {
         runInTransaction {
-            val updateTime = System.currentTimeMillis()
             products.forEach {
-                insertOrUpdateProduct(it, updateTime)
-                insertPrice(it.securityId, it.closingPrice, ProductPriceEntity.CLOSING)
-                insertPrice(it.securityId, it.currentPrice, ProductPriceEntity.CURRENT)
-                insertRange(it.securityId, it.dayRange, ProductRangeEntity.DAY)
-                insertRange(it.securityId, it.dayRange, ProductRangeEntity.YEAR)
+                updateProduct(it)
             }
         }
+    }
+
+    fun updateProduct(product: Product) {
+        val updateTime = System.currentTimeMillis()
+        insertOrUpdateProduct(product, updateTime)
+        insertPrice(product.securityId, product.closingPrice, ProductPriceEntity.CLOSING)
+        insertPrice(product.securityId, product.currentPrice, ProductPriceEntity.CURRENT)
+        insertRange(product.securityId, product.dayRange, ProductRangeEntity.DAY)
+        insertRange(product.securityId, product.dayRange, ProductRangeEntity.YEAR)
     }
 
     private fun insertOrUpdateProduct(product: Product, updateTime: Long) {
