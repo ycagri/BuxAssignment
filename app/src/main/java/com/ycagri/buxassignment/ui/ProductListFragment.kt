@@ -69,8 +69,8 @@ class ProductListFragment : Fragment(), Injectable {
                 }
                 else -> {
                     swipeRefresh.isRefreshing = false
-                    it.message?.let {
-                        Snackbar.make(coordinatorLayout, it, Snackbar.LENGTH_SHORT).show()
+                    it.message?.let { message ->
+                        Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show()
                     }
                 }
             }
