@@ -53,6 +53,8 @@ dependencies {
     implementation deps.androidx.navigation_ui
     implementation deps.material
 
+    implementation deps.androidx.room.runtime
+    kapt deps.androidx.room.compiler
 
     // Dagger dependencies
     kapt deps.dagger2.compiler
