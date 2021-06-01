@@ -1,93 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.ProductDetailFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/tv_title"
-        style="@style/TextAppearance.AppCompat.Title"
+    <data>
+
+        <import type="com.ycagri.buxassignment.db.ProductEntity" />
+
+        <import type="com.ycagri.buxassignment.util.Resource" />
+
+        <import type="com.ycagri.buxassignment.util.Status" />
+
+        <import type="androidx.lifecycle.LiveData" />
+
+        <variable
+            name="current_price"
+            type="LiveData&lt;String>" />
+
+        <variable
+            name="closing_price"
+            type="LiveData&lt;String>" />
+
+        <variable
+            name="day_range_low"
+            type="LiveData&lt;String>" />
+
+        <variable
+            name="day_range_high"
+            type="LiveData&lt;String>" />
+
+        <variable
+            name="year_range_low"
+            type="LiveData&lt;String>" />
+
+        <variable
+            name="year_range_high"
+            type="LiveData&lt;String>" />
+
+        <variable
+            name="product"
+            type="LiveData&lt;Resource&lt;ProductEntity>>" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        tools:context=".ui.ProductDetailFragment">
 
-    <TextView
-        android:id="@+id/tv_description"
-        style="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@{product.status == Status.SUCCESS ? product.data.displayName : ``}"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_prices"
-        style="@style/TextAppearance.AppCompat.Title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="@string/prices"
-        app:layout_constraintTop_toBottomOf="@id/tv_description" />
+        <TextView
+            android:id="@+id/tv_description"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@{product.status == Status.SUCCESS ? product.data.description : ``}"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
-    <TextView
-        android:id="@+id/tv_current_price"
-        style="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        app:layout_constraintEnd_toStartOf="@id/tv_closing_price"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_prices" />
+        <TextView
+            android:id="@+id/tv_prices"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/prices"
+            app:layout_constraintTop_toBottomOf="@id/tv_description" />
 
-    <TextView
-        android:id="@+id/tv_closing_price"
-        style="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@id/tv_current_price"
-        app:layout_constraintTop_toBottomOf="@id/tv_prices" />
+        <TextView
+            android:id="@+id/tv_current_price"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@{String.format(@string/current_price, current_price)}"
+            app:layout_constraintEnd_toStartOf="@id/tv_closing_price"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_prices" />
 
-    <TextView
-        android:id="@+id/tv_ranges"
-        style="@style/TextAppearance.AppCompat.Title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="@string/ranges"
-        app:layout_constraintTop_toBottomOf="@id/tv_closing_price" />
+        <TextView
+            android:id="@+id/tv_closing_price"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@{String.format(@string/closing_price, closing_price)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/tv_current_price"
+            app:layout_constraintTop_toBottomOf="@id/tv_prices" />
 
-    <TextView
-        android:id="@+id/tv_day_range"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        app:layout_constraintEnd_toStartOf="@id/tv_year_range"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_ranges" />
+        <TextView
+            android:id="@+id/tv_ranges"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/ranges"
+            app:layout_constraintTop_toBottomOf="@id/tv_closing_price" />
 
-    <TextView
-        android:id="@+id/tv_year_range"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@id/tv_day_range"
-        app:layout_constraintTop_toBottomOf="@id/tv_ranges" />
+        <TextView
+            android:id="@+id/tv_day_range"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/day_range"
+            app:layout_constraintEnd_toStartOf="@id/tv_year_range"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_ranges" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/subscribe"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_year_range" />
+        <TextView
+            android:id="@+id/tv_year_range"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/year_range"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/tv_day_range"
+            app:layout_constraintTop_toBottomOf="@id/tv_ranges" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_day_range_low"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@{String.format(@string/low, day_range_low)}"
+            app:layout_constraintEnd_toStartOf="@id/tv_year_range_low"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_day_range" />
+
+        <TextView
+            android:id="@+id/tv_year_range_low"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@{String.format(@string/low, year_range_low)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/tv_day_range_low"
+            app:layout_constraintTop_toBottomOf="@id/tv_year_range" />
+
+        <TextView
+            android:id="@+id/tv_day_range_high"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@{String.format(@string/high, day_range_high)}"
+            app:layout_constraintEnd_toStartOf="@id/tv_year_range_high"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_day_range_low" />
+
+        <TextView
+            android:id="@+id/tv_year_range_high"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@{String.format(@string/high, year_range_high)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/tv_day_range_low"
+            app:layout_constraintTop_toBottomOf="@id/tv_year_range_low" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/subscribe"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_year_range_high" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

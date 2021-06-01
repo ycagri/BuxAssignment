@@ -5,4 +5,10 @@
     <string name="prices">Prices</string>
     <string name="ranges">Ranges</string>
     <string name="subscribe">Subscribe</string>
+    <string name="current_price">Current Price: %s</string>
+    <string name="closing_price">Closing Price: %s</string>
+    <string name="day_range">Day Range</string>
+    <string name="year_range">Year Range</string>
+    <string name="low">Low: %s</string>
+    <string name="high">High: %s</string>
 </resources>
