@@ -44,7 +44,7 @@ class ProductRepository @Inject constructor(
             override fun createCall(): LiveData<ApiResponse<Product>> {
                 return service.getProductById(id)
             }
-        }
+        }.asLiveData()
 
     fun getClosingPrice(id: String) = db.productPriceDao().getClosingPrice(id)
 
