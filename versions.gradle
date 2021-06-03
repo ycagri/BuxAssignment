@@ -29,6 +29,7 @@ versions.espresso = '3.3.0'
 versions.mockito_core = '2.25.0'
 versions.mockito_all = '1.10.19'
 versions.mockito_android = '2.25.0'
+versions.mockwebserver = "3.8.1"
 ext.versions = versions
 
 def build_versions = [:]
@@ -95,4 +96,5 @@ deps.mockito = mockito
 deps.kotlin = "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin_plugin"
 deps.material = "com.google.android.material:material:$versions.material"
 deps.junit = "junit:junit:$versions.junit"
+deps.mock_web_server = "com.squareup.okhttp3:mockwebserver:$versions.mockwebserver"
 ext.deps = deps
