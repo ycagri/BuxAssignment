@@ -53,6 +53,8 @@ class ProductDetailFragmentTest {
 
     private val yearRangeHigh = MutableLiveData<String>()
 
+    private val subscribed = MutableLiveData<Int>()
+
     @Before
     fun setup() {
         `when`(viewModel.product).thenReturn(product)
@@ -62,6 +64,7 @@ class ProductDetailFragmentTest {
         `when`(viewModel.dayRangeHigh).thenReturn(dayRangeHigh)
         `when`(viewModel.yearRangeLow).thenReturn(yearRangeLow)
         `when`(viewModel.yearRangeHigh).thenReturn(yearRangeHigh)
+        `when`(viewModel.subscribed).thenReturn(subscribed)
 
         val scenario =
             launchFragmentInContainer(null, R.style.Theme_MaterialComponents_DayNight_DarkActionBar)
@@ -124,5 +127,17 @@ class ProductDetailFragmentTest {
     fun testYearRangeHighLoaded() {
         yearRangeHigh.postValue("Year Range High")
         onView(withId(R.id.tv_year_range_high)).check(ViewAssertions.matches(withText("High: Year Range High")))
+    }
+
+    @Test
+    fun testSubscribe() {
+        subscribed.postValue(1)
+        onView(withId(R.id.btn_subscribe)).check(ViewAssertions.matches(withText(R.string.unsubscribe)))
+    }
+
+    @Test
+    fun testUnsubscribe() {
+        subscribed.postValue(0)
+        onView(withId(R.id.btn_subscribe)).check(ViewAssertions.matches(withText(R.string.subscribe)))
     }
 }

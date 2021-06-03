@@ -40,6 +40,10 @@
         <variable
             name="product"
             type="LiveData&lt;Resource&lt;ProductEntity>>" />
+
+        <variable
+            name="subscription"
+            type="LiveData&lt;Integer>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -180,9 +184,10 @@
             app:layout_constraintTop_toBottomOf="@id/tv_year_range_low" />
 
         <Button
+            android:id="@+id/btn_subscribe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/subscribe"
+            android:text="@{subscription == 0 ? @string/subscribe : @string/unsubscribe}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_year_range_high" />

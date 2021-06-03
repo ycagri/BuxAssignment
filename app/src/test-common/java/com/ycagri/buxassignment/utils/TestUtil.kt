@@ -6,6 +6,7 @@ import com.ycagri.buxassignment.api.ProductRange
 import com.ycagri.buxassignment.db.ProductEntity
 import com.ycagri.buxassignment.db.ProductPriceEntity
 import com.ycagri.buxassignment.db.ProductRangeEntity
+import com.ycagri.buxassignment.db.ProductSubscriptionEntity
 
 object TestUtil {
 
@@ -41,6 +42,13 @@ object TestUtil {
             high = 10.0,
             low = 1.0,
             type = type
+        )
+
+    fun createProductSubscriptionEntity(productId: String, subscribed: Int) =
+        ProductSubscriptionEntity(
+            id = 0,
+            productId = productId,
+            subscribed = subscribed
         )
 
     fun createProduct(

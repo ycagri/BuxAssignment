@@ -7,6 +7,7 @@ import com.ycagri.buxassignment.api.Product
 import com.ycagri.buxassignment.api.SubscriptionListener
 import com.ycagri.buxassignment.db.ProductDatabase
 import com.ycagri.buxassignment.db.ProductEntity
+import com.ycagri.buxassignment.db.ProductSubscriptionEntity
 import com.ycagri.buxassignment.testing.OpenForTesting
 import com.ycagri.buxassignment.util.AppExecutors
 import okhttp3.OkHttpClient
@@ -60,6 +61,14 @@ class ProductRepository @Inject constructor(
     fun getDayRange(id: String) = db.productRangeDao().getDayRange(id)
 
     fun getYearRange(id: String) = db.productRangeDao().getYearRange(id)
+
+    fun insertSubscription(subscription: ProductSubscriptionEntity) =
+        db.productSubscriptionDao().insertSubscription(subscription)
+
+    fun updateSubscription(subscription: ProductSubscriptionEntity) =
+        db.productSubscriptionDao().updateSubscription(subscription)
+
+    fun getSubscription(id: String) = db.productSubscriptionDao().getProductSubscription(id)
 
     fun getSubscriptionConnection(): WebSocket {
         val request = Request.Builder()

@@ -36,6 +36,10 @@ class ProductDetailFragment : Fragment(), Injectable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initBinding()
+
+        binding.btnSubscribe.setOnClickListener {
+            productViewModel.subscribeProduct()
+        }
     }
 
     private fun initBinding() {
@@ -46,6 +50,7 @@ class ProductDetailFragment : Fragment(), Injectable {
         binding.dayRangeHigh = productViewModel.dayRangeHigh
         binding.yearRangeLow = productViewModel.yearRangeLow
         binding.yearRangeHigh = productViewModel.yearRangeHigh
+        binding.subscription = productViewModel.subscribed
         binding.lifecycleOwner = viewLifecycleOwner
     }
 }

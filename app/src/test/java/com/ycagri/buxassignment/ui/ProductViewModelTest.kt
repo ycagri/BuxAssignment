@@ -7,9 +7,11 @@ import com.ycagri.buxassignment.db.ProductEntity
 import com.ycagri.buxassignment.db.ProductPriceEntity
 import com.ycagri.buxassignment.db.ProductRangeEntity
 import com.ycagri.buxassignment.repository.ProductRepository
+import com.ycagri.buxassignment.util.CoroutineContexts
 import com.ycagri.buxassignment.util.Resource
 import com.ycagri.buxassignment.utils.TestUtil
 import com.ycagri.buxassignment.utils.mock
+import kotlinx.coroutines.Dispatchers
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
@@ -27,11 +29,13 @@ class ProductViewModelTest {
 
     private val productRepository = mock(ProductRepository::class.java)
 
-    private val productViewModel = ProductViewModel(productRepository)
-
+    private val productViewModel = ProductViewModel(
+        productRepository,
+        CoroutineContexts(Dispatchers.Unconfined, Dispatchers.Unconfined, Dispatchers.Unconfined)
+    )
 
     @Before
-    fun setup(){
+    fun setup() {
         `when`(productRepository.getProduct("id")).thenReturn(
             MutableLiveData(
                 Resource.success(
@@ -81,6 +85,15 @@ class ProductViewModelTest {
                     productId = "id",
                     currency = "Test Currency",
                     type = ProductRangeEntity.YEAR
+                )
+            )
+        )
+
+        `when`(productRepository.getSubscription("id")).thenReturn(
+            MutableLiveData(
+                TestUtil.createProductSubscriptionEntity(
+                    productId = "id",
+                    subscribed = 1
                 )
             )
         )
@@ -219,5 +232,21 @@ class ProductViewModelTest {
         productViewModel.selectProduct("id")
         verify(productRepository).getYearRange("id")
         verify(observer).onChanged("10.0 (Test Currency)")
+    }
+
+    @Test
+    fun testCallSubscription() {
+        productViewModel.subscribed.observeForever(mock())
+        productViewModel.selectProduct("id")
+        verify(productRepository).getSubscription("id")
+    }
+
+    @Test
+    fun testSendSubscriptionToUI() {
+        val observer = mock<Observer<Int>>()
+        productViewModel.subscribed.observeForever(observer)
+        productViewModel.selectProduct("id")
+        verify(productRepository).getSubscription("id")
+        verify(observer).onChanged(1)
     }
 }
