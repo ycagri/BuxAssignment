@@ -213,16 +213,18 @@ class ProductDatabaseTest {
 
     @Test
     fun testInsertOrUpdateProducts() {
-        db.insertEntities(TestUtil.createProducts(
-            count = 10,
-            id = "test_id",
-            symbol = "Test Symbol",
-            name = "Test Product",
-            currency = "Test Currency",
-            description = "Test Description"
-        ))
+        db.insertEntities(
+            TestUtil.createProducts(
+                count = 10,
+                id = "test_id",
+                symbol = "Test Symbol",
+                name = "Test Product",
+                currency = "Test Currency",
+                description = "Test Description"
+            )
+        )
 
-        val products =  TestUtil.createProducts(
+        val products = TestUtil.createProducts(
             count = 10,
             id = "test_id",
             symbol = "Test Symbol Update",
@@ -257,6 +259,51 @@ class ProductDatabaseTest {
         }
     }
 
+    @Test(expected = SQLiteConstraintException::class)
+    fun testProductSubscriptionInsertException() {
+        insertProductSubscription()
+    }
+
+    @Test
+    fun testProductSubscriptionInsert() {
+        insertProduct()
+        assertEquals(1, insertProductSubscription())
+    }
+
+    @Test
+    fun testProductSubscriptionUpdate() {
+        insertProduct()
+        insertProductSubscription()
+        assertEquals(
+            1, db.productSubscriptionDao().updateSubscription(
+                ProductSubscriptionEntity(
+                    id = 1,
+                    productId = "id",
+                    subscribed = 1
+                )
+            )
+        )
+    }
+
+    @Test
+    fun testProductSubscriptionsGet() {
+        insertProduct()
+        insertProductSubscription()
+        val res = db.productSubscriptionDao().getSubscriptions().getOrAwaitValue()
+        assertEquals(1, res.size)
+        assertEquals("id", res[0].productId)
+        assertEquals(0, res[0].subscribed)
+    }
+
+    @Test
+    fun testProductSubscriptionByIdGet() {
+        insertProduct()
+        insertProductSubscription()
+        val res = db.productSubscriptionDao().getProductSubscription("id").getOrAwaitValue()
+        assertEquals("id", res.productId)
+        assertEquals(0, res.subscribed)
+    }
+
     private fun insertProduct(): Long {
         return db.productDao().insertProduct(
             TestUtil.createProductEntity(
@@ -288,4 +335,13 @@ class ProductDatabaseTest {
         )
     }
 
+    private fun insertProductSubscription(): Long {
+        return db.productSubscriptionDao().insertSubscription(
+            ProductSubscriptionEntity(
+                id = 0,
+                productId = "id",
+                subscribed = 0
+            )
+        )
+    }
 }

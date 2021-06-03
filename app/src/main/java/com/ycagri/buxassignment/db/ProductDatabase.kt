@@ -10,7 +10,8 @@ import com.ycagri.buxassignment.api.ProductRange
     entities = [
         ProductEntity::class,
         ProductPriceEntity::class,
-        ProductRangeEntity::class
+        ProductRangeEntity::class,
+        ProductSubscriptionEntity::class
     ],
     version = 1, exportSchema = false
 )
@@ -21,6 +22,8 @@ abstract class ProductDatabase : RoomDatabase() {
     abstract fun productPriceDao(): ProductPriceDao
 
     abstract fun productRangeDao(): ProductRangeDao
+
+    abstract fun productSubscriptionDao(): ProductSubscriptionDao
 
     fun insertEntities(products: List<Product>) {
         runInTransaction {
