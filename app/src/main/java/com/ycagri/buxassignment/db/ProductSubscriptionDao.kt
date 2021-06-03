@@ -19,5 +19,5 @@ abstract class ProductSubscriptionDao {
     abstract fun getSubscriptions(): LiveData<List<ProductSubscriptionEntity>>
 
     @Query("Select * From tbl_product_subscriptions Where product_id=:productId")
-    abstract fun getProductSubscription(productId: String): LiveData<ProductSubscriptionEntity>
+    abstract fun getProductSubscription(productId: String): LiveData<ProductSubscriptionEntity?>
 }

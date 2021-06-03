@@ -10,6 +10,7 @@ import com.ycagri.buxassignment.utils.TestUtil
 import com.ycagri.buxassignment.utils.getOrAwaitValue
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -296,12 +297,19 @@ class ProductDatabaseTest {
     }
 
     @Test
+    fun testProductSubscriptionByIdNullGet() {
+        insertProduct()
+        val res = db.productSubscriptionDao().getProductSubscription("id").getOrAwaitValue()
+        assertNull(res)
+    }
+
+    @Test
     fun testProductSubscriptionByIdGet() {
         insertProduct()
         insertProductSubscription()
         val res = db.productSubscriptionDao().getProductSubscription("id").getOrAwaitValue()
-        assertEquals("id", res.productId)
-        assertEquals(0, res.subscribed)
+        assertEquals("id", res?.productId)
+        assertEquals(0, res?.subscribed)
     }
 
     private fun insertProduct(): Long {
