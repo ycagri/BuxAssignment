@@ -33,6 +33,6 @@ data class ProductRangeEntity(
     companion object {
         const val DAY = 0
 
-        const val YEAR = 0
+        const val YEAR = 1
     }
 }

@@ -108,6 +108,18 @@ class ProductDatabaseTest {
     }
 
     @Test
+    fun testProductCurrentPriceUpdate() {
+        insertProduct()
+        insertProductPrice(ProductPriceEntity.CURRENT)
+        assertEquals(
+            1, db.productPriceDao().updateCurrentPrice(
+                amount = 10.0,
+                productId = "id"
+            )
+        )
+    }
+
+    @Test
     fun testProductPriceCurrentGet() {
         insertProduct()
         assertEquals(1, insertProductPrice(ProductPriceEntity.CURRENT))
@@ -121,7 +133,7 @@ class ProductDatabaseTest {
     fun testProductPriceClosingGet() {
         insertProduct()
         assertEquals(1, insertProductPrice(ProductPriceEntity.CLOSING))
-        val res = db.productPriceDao().getCurrentPrice("id").getOrAwaitValue()
+        val res = db.productPriceDao().getClosingPrice("id").getOrAwaitValue()
         assertEquals("Test Currency", res.currency)
         assertEquals("id", res.productId)
         assertEquals(ProductPriceEntity.CLOSING, res.type)
@@ -169,7 +181,7 @@ class ProductDatabaseTest {
     fun testProductRangeYearGet() {
         insertProduct()
         assertEquals(1, insertProductRange(ProductRangeEntity.YEAR))
-        val res = db.productRangeDao().getDayRange("id").getOrAwaitValue()
+        val res = db.productRangeDao().getYearRange("id").getOrAwaitValue()
         assertEquals("Test Currency", res.currency)
         assertEquals("id", res.productId)
         assertEquals(ProductRangeEntity.YEAR, res.type)

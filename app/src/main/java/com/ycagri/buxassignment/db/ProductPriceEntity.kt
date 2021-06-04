@@ -27,6 +27,6 @@ data class ProductPriceEntity (
 ){
     companion object{
         const val CURRENT = 0
-        const val CLOSING = 0
+        const val CLOSING = 1
     }
 }
