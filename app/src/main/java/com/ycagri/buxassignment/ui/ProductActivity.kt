@@ -28,6 +28,11 @@ class ProductActivity : AppCompatActivity(), HasSupportFragmentInjector {
         setContentView(R.layout.activity_product)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container_master, ProductListFragment())
+            .commit()
+
         productViewModel.selectedProduct.observe(this) {
             val container = findViewById<View>(R.id.container_detail)
             if (container == null) {
@@ -35,8 +40,14 @@ class ProductActivity : AppCompatActivity(), HasSupportFragmentInjector {
                     .replace(R.id.container_master, ProductDetailFragment())
                     .addToBackStack(null)
                     .commit()
+            }else{
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container_detail, ProductDetailFragment())
+                    .commit()
             }
         }
+
+
 
         startService(Intent(this, SubscriptionService::class.java))
     }
