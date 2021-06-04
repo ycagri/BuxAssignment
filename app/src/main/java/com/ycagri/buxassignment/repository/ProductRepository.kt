@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import com.ycagri.buxassignment.api.ApiResponse
 import com.ycagri.buxassignment.api.BuxRetrofitApi
 import com.ycagri.buxassignment.api.Product
-import com.ycagri.buxassignment.api.SubscriptionListener
 import com.ycagri.buxassignment.db.ProductDatabase
 import com.ycagri.buxassignment.db.ProductEntity
 import com.ycagri.buxassignment.db.ProductSubscriptionEntity
@@ -13,6 +12,7 @@ import com.ycagri.buxassignment.util.AppExecutors
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
+import okhttp3.WebSocketListener
 import javax.inject.Inject
 
 @OpenForTesting
@@ -52,8 +52,6 @@ class ProductRepository @Inject constructor(
             }
         }.asLiveData()
 
-    fun getProductsFromDatabase() = db.productDao().getProducts()
-
     fun getClosingPrice(id: String) = db.productPriceDao().getClosingPrice(id)
 
     fun getCurrentPrice(id: String) = db.productPriceDao().getCurrentPrice(id)
@@ -70,7 +68,11 @@ class ProductRepository @Inject constructor(
 
     fun getSubscription(id: String) = db.productSubscriptionDao().getProductSubscription(id)
 
-    fun getSubscriptionConnection(): WebSocket {
+    fun getSubscriptions() = db.productSubscriptionDao().getSubscriptions()
+
+    fun updateCurrentPrice(id:String, price:Double) = db.productPriceDao().updateCurrentPrice(price, id)
+
+    fun getSubscriptionConnection(listener: WebSocketListener): WebSocket {
         val request = Request.Builder()
             .url("https://rtf.beta.getbux.com/subscriptions/me")
             .addHeader(
@@ -79,6 +81,6 @@ class ProductRepository @Inject constructor(
             )
             .addHeader("Accept-Language", "nl-NL,en;q=0.8")
             .build();
-        return client.newWebSocket(request, SubscriptionListener())
+        return client.newWebSocket(request, listener)
     }
 }

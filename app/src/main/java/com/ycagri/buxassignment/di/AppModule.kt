@@ -48,4 +48,10 @@ class AppModule {
     fun provideProductsDatabase(app: Application): ProductDatabase {
         return Room.databaseBuilder(app, ProductDatabase::class.java, "products.db").build()
     }
+
+    @Singleton
+    @Provides
+    fun provideClient(): OkHttpClient {
+        return OkHttpClient()
+    }
 }
