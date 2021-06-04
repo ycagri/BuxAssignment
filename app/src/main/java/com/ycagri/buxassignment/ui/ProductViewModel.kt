@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.ycagri.buxassignment.db.ProductSubscriptionEntity
 import com.ycagri.buxassignment.repository.ProductRepository
 import com.ycagri.buxassignment.testing.OpenForTesting
+import com.ycagri.buxassignment.util.AbsentLiveData
 import com.ycagri.buxassignment.util.CoroutineContexts
+import com.ycagri.buxassignment.util.Status
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,7 +20,20 @@ class ProductViewModel @Inject constructor(
     private val contexts: CoroutineContexts
 ) : ViewModel() {
 
-    val products by lazy { repository.getProducts() }
+    private val _refreshing = MutableLiveData<Boolean>()
+
+    val products = switchMap(_refreshing) {
+        if (it)
+            repository.getProducts()
+        else
+            AbsentLiveData.create()
+    }
+
+    val refreshing by lazy {
+        map(products) {
+            it.status == Status.LOADING
+        }
+    }
 
     val selectedProduct = MutableLiveData<String>()
 
@@ -86,6 +101,9 @@ class ProductViewModel @Inject constructor(
         it?.subscribed ?: 0
     }
 
+    fun refresh() {
+        _refreshing.value = true
+    }
 
     fun selectProduct(id: String) {
         if (id != selectedProduct.value)
