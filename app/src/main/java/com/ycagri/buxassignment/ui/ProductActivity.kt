@@ -1,5 +1,6 @@
 package com.ycagri.buxassignment.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.ycagri.buxassignment.R
+import com.ycagri.buxassignment.service.SubscriptionService
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
@@ -35,6 +37,8 @@ class ProductActivity : AppCompatActivity(), HasSupportFragmentInjector {
                     .commit()
             }
         }
+
+        startService(Intent(this, SubscriptionService::class.java))
     }
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
